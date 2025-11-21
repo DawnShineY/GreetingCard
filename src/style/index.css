@@ -1,0 +1,181 @@
+.center{
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: 100vw;
+	height: 2px;
+	transform: translate(-50%, -50%);
+	background-color: #00000055;
+	z-index: 10;
+}
+.fixed{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	background-color: #f0e4d6;
+	/*background-image: url("https://www.transparenttextures.com/patterns/paper-3.png");*/
+	/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+}
+.house{
+	--wallWidth: 70vw;
+	position: absolute;
+	top: 100vh;
+	left: 50%;
+	display: block;
+	width: var(--wallWidth);
+	max-width: 1600px;
+	/*height: calc( var(--wallWidth) * 1.830161 );*/
+	aspect-ratio: calc( 1 / 1.830161);
+	transform-origin: center 84%;
+	will-change: transform, opacity;
+}
+@media screen and (max-width: 768px) {
+	.house{
+		--wallWidth: 129vw;
+	}
+}
+.house__part_container{
+	pointer-events: none;
+}
+.house__part{
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: block;
+	width: 100%;
+	height: auto;
+}
+.house__part-wall_deco{
+	top: auto;
+	bottom: 0;
+}
+.house__part-door_right, .house__part-door_left, .house__part-tree{
+	top: auto;
+	bottom: 0;
+}
+.house__neighbor_container{
+	position: absolute;
+	top: 15.3%;
+	width: 100%;
+	z-index: -1;
+}
+.house__neighbor_container::after{
+	content: "";
+	position: absolute;
+	top: -5%;
+	left: 15%;
+	background-color: #DBD1C4;
+	width: 70%;
+	height: 105%;
+	z-index: -1;
+}
+.house__neighbor_floor{
+	position: relative;
+	display: flex;
+	justify-content: center;
+	margin-bottom: 5%;
+}
+.house__neighbor_floor-2, .house__neighbor_floor-1{
+	gap: 2%;
+}
+.house__neighbor{
+	position: relative;
+	width: 14.6412%;
+	aspect-ratio: 1;
+	background: url("/img_neighbor.png") no-repeat;
+	background-size: calc(100% * 4) auto;
+	cursor: pointer;
+}
+.house__neighbor_floor-5 .house__neighbor:nth-child(1){
+	background-position: left 0 top 0;
+}
+.house__neighbor_floor-5 .house__neighbor:nth-child(2){
+	background-position: left 33.333% top 0;
+}
+.house__neighbor_floor-5 .house__neighbor:nth-child(3){
+	background-position: left 66.666% top 0;
+}
+.house__neighbor_floor-5 .house__neighbor:nth-child(4){
+	background-position: left 100% top 0;
+}
+.house__neighbor_floor-4 .house__neighbor:nth-child(1){
+	background-position: left 0 top 25%;
+}
+.house__neighbor_floor-4 .house__neighbor:nth-child(2){
+	background-position: left 33.333% top 25%;
+}
+.house__neighbor_floor-4 .house__neighbor:nth-child(3){
+	background-position: left 66.666% top 25%;
+}
+.house__neighbor_floor-4 .house__neighbor:nth-child(4){
+	background-position: left 100% top 25%;
+}
+.house__neighbor_floor-3 .house__neighbor:nth-child(1){
+	background-position: left 0 top 50%;
+}
+.house__neighbor_floor-3 .house__neighbor:nth-child(2){
+	background-position: left 33.333% top 50%;
+}
+.house__neighbor_floor-3 .house__neighbor:nth-child(3){
+	background-position: left 66.666% top 50%;
+}
+.house__neighbor_floor-3 .house__neighbor:nth-child(4){
+	background-position: left 100% top 50%;
+}
+.house__neighbor_floor-2 .house__neighbor:nth-child(1){
+	background-position: left 0 top 75%;
+}
+.house__neighbor_floor-2 .house__neighbor:nth-child(2){
+	background-position: left 33.333% top 75%;
+}
+.house__neighbor_floor-2 .house__neighbor:nth-child(3){
+	background-position: left 66.666% top 75%;
+}
+.house__neighbor_floor-1 .house__neighbor:nth-child(1){
+	background-position: left 0 top 100%;
+}
+.house__neighbor_floor-1 .house__neighbor:nth-child(2){
+	background-position: left 33.333% top 100%;
+}
+.house__neighbor_floor-1 .house__neighbor:nth-child(3){
+	background-position: left 66.666% top 100%;
+}
+.house__curtain{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	aspect-ratio: 0.8;
+	background: url("/img_curtain.png") no-repeat;
+	background-size: auto 100%;
+	transition: all 2s;
+	overflow: hidden;
+}
+.house__curtain-open{
+	background-position: left 0 bottom calc(var(--wallWidth) * 0.146412 );
+}
+.house__curtain::after, .house__curtain::before{
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 50%;
+	height: 100%;
+	background: url("/img_curtain.png") left 66.6666% center no-repeat;
+	background-size: auto 100%;
+	transition: transform 1.5s 0.1s;
+}
+.house__curtain::before{
+	left: auto;
+	right: 0;
+	background-position: left 100% center;
+	z-index: 1
+}
+.house__curtain-open.house__curtain::after{
+	transform: translateX(-60%)
+}
+.house__curtain-open.house__curtain::before{
+	transform: translateX(60%)
+}
