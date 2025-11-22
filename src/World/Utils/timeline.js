@@ -28,6 +28,7 @@ export function localizeProgress(progress, start, end)
 			const sentence = ( progress ) => {
 				const localProgress = localizeProgress(progress, start, end)
 				const easingProgress = Easing[ easing ](localProgress)
+				//const isActive = easingProgress > 0 && easingProgress < 1 ? 1 : 0
 				let calculatedValue = `calc( (${ to } - ${ from }) * ${ easingProgress } + ${ from } )`
 				if(type !== name) calculatedValue = `${ name }( ` + calculatedValue + ')'
 

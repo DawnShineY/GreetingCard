@@ -4,11 +4,25 @@ const wallTimeline = [
 			type: 'transform',
 			name: 'translateY',
 			from: '0px',
-			to: '-80% - 50vh'
+			to: '-95% - 50vh'
 		},
 		timeline: {
 			start: 0.05,
-			end: 0.4,
+			end: 0.5,
+			easing: 'easeOutSine',
+			loop: false
+		}
+	},
+	{
+		animation: {
+			type: 'transform',
+			name: 'translateY',
+			from: '0px',
+			to: '15%'
+		},
+		timeline: {
+			start: 0.48,
+			end: 0.6,
 			easing: 'easeOutSine',
 			loop: false
 		}
