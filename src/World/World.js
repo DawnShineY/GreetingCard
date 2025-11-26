@@ -1,3 +1,4 @@
+import Presents from "./3D/Presents"
 import Door from "./Assets/Door"
 import Sky from "./Assets/Sky"
 import Wall from "./Assets/Wall"
@@ -13,6 +14,8 @@ export default class World {
 		this.door = new Door()
 		this.window = new Window()
 		this.sky = new Sky()
+
+		this.presents = new Presents()
 
 		// Basic Setting
 		this.timeDelta = 0.016
@@ -58,16 +61,17 @@ export default class World {
 			console.log(this.progress)
 
 			// Add Assets Event
-			this.wall.playAction( this.progress )
-			this.door.playAction( this.progress )
-			this.window.playAction( this.progress )
-			this.sky.playAction( this.progress )
 
 			this.ticked = false
 			if(!this.ticked)
 			{
 				requestAnimationFrame(() =>
 				{
+					this.wall.playAction( this.progress )
+					this.door.playAction( this.progress )
+					this.window.playAction( this.progress )
+					this.sky.playAction( this.progress )
+					this.presents.playAction( this.progress )
 				})
 				this.ticked = true
 			}

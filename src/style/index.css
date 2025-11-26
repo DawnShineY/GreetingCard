@@ -20,6 +20,16 @@
 	z-index: 10;
 	pointer-events: none;
 }
+.webgl{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	touch-action: pan-y;
+  	-ms-touch-action: pan-y;
+	/*background-color: red;*/
+}
 .fixed{
 	position: fixed;
 	top: 0;
