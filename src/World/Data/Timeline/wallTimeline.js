@@ -4,7 +4,7 @@ const wallTimeline = [
 			type: 'transform',
 			name: 'translateY',
 			from: '0px',
-			to: '-95% - 50vh'
+			to: '-90% - 50vh'
 		},
 		timeline: {
 			start: 0.05,
@@ -18,7 +18,7 @@ const wallTimeline = [
 			type: 'transform',
 			name: 'translateY',
 			from: '0px',
-			to: '15%'
+			to: '5%'
 		},
 		timeline: {
 			start: 0.48,

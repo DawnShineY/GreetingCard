@@ -8,6 +8,32 @@
 	background-color: #00000055;
 	z-index: 10;
 }
+.loading{
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100vh;
+	background-color: skyblue;
+	z-index: 100;
+}
+.loading__btn{
+	width: 150px;
+	height: 50px;
+	background-color: red;
+	cursor: pointer;
+}
+.santa{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 50vw;
+	height: auto;
+	z-index: 1;
+}
 .frame{
 	--borderWidth: 5vmin;
 	position: fixed;
@@ -19,6 +45,28 @@
 	border-image: url("/img_border4.png") 100 / var(--borderWidth) / 0 round;
 	z-index: 10;
 	pointer-events: none;
+}
+.webgl_wing_group{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+}
+.webgl_wing{
+	position: absolute;
+	top: 0;
+	width: 25vw;
+	height: 100vh;
+	background-color: red;
+}
+.webgl_wing:nth-child(1)
+{
+	left: 0;
+}
+.webgl_wing:nth-child(2)
+{
+	right: 0;
 }
 .webgl{
 	position: absolute;

@@ -1,16 +1,22 @@
 import { Body, Box, ContactMaterial, Cylinder, Material, Plane, Quaternion, SAPBroadphase, Vec3, World } from "cannon";
 import { AmbientLight, BoxGeometry, Clock, CylinderGeometry, DirectionalLight, InstancedMesh, LoadingManager, Matrix4, Mesh, MeshBasicMaterial, MeshStandardMaterial, Object3D, PerspectiveCamera, PlaneGeometry, Scene, WebGLRenderer } from "three";
 import { GLTFLoader, OrbitControls } from "three/examples/jsm/Addons.js";
+import { localizeProgress } from "../Utils/timeline";
 
 export default class Presents{
 	constructor()
 	{
 
+		this.isModelLoaded = false
+		this.isBoxFallen = false
+		this.dummy = new Object3D()
+
+		this.wingElement = document.querySelector('.webgl_wing_group')
+
 		this.setDefault()
 		this.setPhysics()
 		this.setLoader()
 
-		this.isLoaded = false
 		this.resize()
 
 		/**
@@ -21,8 +27,8 @@ export default class Presents{
 		this.elapsedTime = 0
 		this.deltaTime = 1/60
 		this.tick()
-		this.dummy = new Object3D()
 	}
+
 	setDefault()
 	{
 		this.canvas = document.querySelector('#webgl')
@@ -32,20 +38,21 @@ export default class Presents{
 		}
 		this.scene = new Scene()
 		this.scene.background = null
-		this.camera = new PerspectiveCamera(30, this.sizes.width / this.sizes.height, 0.1, 100 )
-		this.camera.position.set(0, 2, -25)
+		this.camera = new PerspectiveCamera(30, this.sizes.width / this.sizes.height, 3.5, 20 )
+		this.camera.position.set(0, 0, -15)
 		this.camera.lookAt(0, 0, 0)
 		//this.controls = new OrbitControls(this.camera, this.canvas)
 		this.renderer = new WebGLRenderer({ antialias: true, canvas: this.canvas, alpha: true })
 		this.renderer.setSize( this.sizes.width, this.sizes.height )
 		this.renderer.setPixelRatio( Math.min( window.devicePixelRatio, 2 ) )
 
-		this.ambientLight = new AmbientLight(0xffffff, 3)
+		this.ambientLight = new AmbientLight(0xffffff, 2)
 		this.scene.add(this.ambientLight)
 
 		this.directionalLight = new DirectionalLight(0xffffff, 3)
 		this.directionalLight.position.set(1, 2, 3)
 		this.scene.add(this.directionalLight)
+		this.scene.position.y = - 0.5
 	}
 
 	setPhysics()
@@ -102,7 +109,7 @@ export default class Presents{
 				const body = new Body(
 					{
 						shape,
-						mass: 2,
+						mass: 0,
 						material: this.defaultMaterial,
 						position: new Vec3(
 							(Math.random() - 0.5) * this.boxPositionRange,
@@ -111,23 +118,55 @@ export default class Presents{
 						),
 					}
 				)
-
 				this.world.addBody( body )
 				this.boxesToUpdate[i].push( body )
 			}
 		})
 
+	}
+	setInitialPosition()
+	{
+		this.isBoxFallen = false
+		console.log('kkkkkkk')
+		this.world.gravity.set(0, -9.8, 0)
+		this.boxesToUpdate.forEach(( boxes ) =>
+		{
+			boxes.forEach((box) =>
+			{
+				box.type = Body.STATIC
+				box.position.set(
+					(Math.random() - 0.5) * this.boxPositionRange,
+					(Math.random() + 0.5) * 5 * this.boxPositionRange,
+					(Math.random() - 0.5) * this.boxPositionRange,
+				)
+				box.mass = 0
+				box.updateMassProperties();
+			})
+		})
+	}
+	setMass()
+	{
+		this.isBoxFallen = true
+		this.boxesToUpdate.forEach(( boxes ) =>
+		{
+			boxes.forEach((box) =>
+			{
+				box.type = Body.DYNAMIC
+				box.mass = 3
+				box.updateMassProperties()
+				box.wakeUp();
+			})
+		})
 		setTimeout(() =>
 		{
 			this.world.gravity.set(0, -2, 0);
 		}, 3000)
-
 	}
 
 	setLoader()
 	{
 		this.loadingManager = new LoadingManager(
-			() => { this.isLoaded = true }
+			() => { this.isModelLoaded = true }
 		)
 		this.loader = new GLTFLoader( this.loadingManager )
 		this.loader.load(
@@ -170,7 +209,7 @@ export default class Presents{
 
 	updatePhysics()
 	{
-		if(this.isLoaded)
+		if(this.isModelLoaded)
 		{
 			this.world.step( 1 / 60, this.deltaTime * 0.001, 3)
 			this.boxesToUpdate.forEach((bodyArray, k) =>
@@ -205,9 +244,42 @@ export default class Presents{
 
 	playAction(progress)
 	{
-		this.camera.position.y = 2 + 10 * progress
-		this.camera.position.z = -25 + 24.9999 * progress
+		this.startY = 0.62
+		this.endY = 0.8
+		this.localProgressY = localizeProgress( progress, this.startY, this.endY )
+		this.camera.position.y = 10 * this.localProgressY
+
+		this.startZ = 0.37
+		this.endZ = 0.8
+		this.localProgressZ = localizeProgress( progress, this.startZ, this.endZ )
+		this.camera.position.z = -20 + 19 * this.localProgressZ
 		this.camera.lookAt(0, 0, 0)
+
+		this.startLight = 0.37
+		this.endLight = 0.6
+		this.localProgressLight = localizeProgress( progress, this.startLight, this.endLight )
+		this.ambientLight.intensity = 1 + this.localProgressLight * 2
+
+		this.startOpacity = 0.4
+		this.endOpacity = 0.5
+		this.localProgressOpacity = localizeProgress( progress, this.startOpacity, this.endOpacity )
+		this.canvas.style.opacity = this.localProgressOpacity
+
+		if( progress > 0.4 )
+		{
+			if(!this.isBoxFallen)
+			{
+				this.setMass()
+			}
+		}
+		else{
+			if( this.isBoxFallen )
+			{
+				this.setInitialPosition()
+			}
+		}
+
+
 	}
 
 }

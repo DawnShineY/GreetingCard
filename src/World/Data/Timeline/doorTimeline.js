@@ -3,7 +3,7 @@ const doorLeftTimeline = [
 		animation: {
 			type: 'transform',
 			name: 'translateX',
-			from: '0px',
+			from: '5px',
 			to: '-15%'
 		},
 		timeline: {
@@ -19,7 +19,7 @@ const doorRightTimeline = [
 		animation: {
 			type: 'transform',
 			name: 'translateX',
-			from: '0px',
+			from: '-5px',
 			to: '15%'
 		},
 		timeline: {

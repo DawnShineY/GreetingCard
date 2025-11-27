@@ -3,12 +3,17 @@ import Door from "./Assets/Door"
 import Sky from "./Assets/Sky"
 import Wall from "./Assets/Wall"
 import Window from "./Assets/Window"
+import Audio from "./Audio"
+import Loading from "./Loading"
 
 export default class World {
 	constructor()
 	{
 		this.timelineScaleFactor = 10
 		document.body.style.height = `${100 * this.timelineScaleFactor}vh`
+
+		this.audio = new Audio()
+		this.loading = new Loading()
 
 		this.wall = new Wall()
 		this.door = new Door()
