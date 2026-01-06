@@ -127,7 +127,7 @@ export default class Presents{
 	setInitialPosition()
 	{
 		this.isBoxFallen = false
-		console.log('kkkkkkk')
+		// console.log('kkkkkkk')
 		this.world.gravity.set(0, -9.8, 0)
 		this.boxesToUpdate.forEach(( boxes ) =>
 		{
@@ -278,8 +278,5 @@ export default class Presents{
 				this.setInitialPosition()
 			}
 		}
-
-
 	}
-
 }

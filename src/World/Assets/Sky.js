@@ -44,9 +44,9 @@ export default class Sky{
 	{
 		const localProgress = localizeProgress( progress, this.start, this.end )
 		const easingProgress = Easing[ this.easing ]( localProgress )
-		console.log(localProgress)
+		// console.log(localProgress)
 		const color = this.blendColorGamma('#2c2e31', '#fffbf4', easingProgress)
-		console.log(easingProgress, color)
+		// console.log(easingProgress, color)
 		this.fixedElement.style.backgroundColor = color
 	}
 

@@ -63,7 +63,7 @@ export default class World {
 		{
 			this.scrollCurrent = window.scrollY
 			this.progress = this.scrollCurrent / this.scrollableHeight
-			console.log(this.progress)
+			// console.log(this.progress)
 
 			// Add Assets Event
 
